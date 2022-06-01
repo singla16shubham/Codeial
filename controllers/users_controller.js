@@ -21,7 +21,7 @@ module.exports.signIn=function(req,res){
 }
 // User sign-up
 module.exports.create=function(req,res){
-    // TODO later;
+   
     if(req.body.password!=req.body.confirm_password)
     {
         return res.redirect('back');
@@ -45,5 +45,6 @@ module.exports.create=function(req,res){
 }
 // sign in and create a session for the user
 module.exports.create_session=function(req,res){
-    // TODO later;
+   
+    return res.redirect('/')
 }
