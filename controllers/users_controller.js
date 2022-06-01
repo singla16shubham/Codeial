@@ -58,3 +58,11 @@ module.exports.create_session=function(req,res){
    
     return res.redirect('/')
 }
+module.exports.destroy_session=function(req,res)
+{ req.logout(function(err) {
+    if (err) { return next(err); }
+    res.redirect('/');
+  });
+    // req.logout();
+    // return res.redirect('/')
+}
