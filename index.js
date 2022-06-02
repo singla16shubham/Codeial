@@ -13,9 +13,19 @@ const app=express();
  
  const MongoStore=require('connect-mongo');
 
+ const sassMiddleware=require('node-sass-middleware');
+
 
 
 const { urlencoded } = require('express');
+
+app.use(sassMiddleware({
+    src:'/assets/scss',
+    dest:'/assets/css',
+    debug:true,
+    outputStyle:'extended',
+    prefix:'/css'
+}))
  app.use(expressLayouts);
  app.use(urlencoded());
  app.use(cookieParser());
