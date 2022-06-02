@@ -8,14 +8,22 @@
         </title>
    
       <link rel="stylesheet" href="/css/layout.css">
+      <link rel="stylesheet" href="/css/header.css">
+      <link rel="stylesheet" href="/css/footer.css">
       <%- style %> 
     </head>
     <body>
-
-       <%- include('_header.ejs') %> 
+      <!-- <header id="layout-header"> -->
+        <%- include('_header.ejs') %> 
+     
+       
 
      <!-- Here will be variable part for layout -->
-     <%- body %> 
+     <main id="layout-main">
+      <%- body %> 
+
+     </main>
+     
 
       <%- include('_footer.ejs') %> 
     
