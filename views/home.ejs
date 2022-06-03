@@ -5,11 +5,15 @@
 <section id="feed-posts">
     <h4>Posts</h4>
     <!-- Only The person who is logged in should be able to post the comment -->
-    <form action="/posts/create" id="new-post-form" method="post">
-        <textarea name="content" cols="30" rows="3" placeholder="Type Here"></textarea>
-        <input type="submit" value="Post">
+    <% if(locals.user){%>
 
-    </form>
+        <form action="/posts/create" id="new-post-form" method="post">
+            <textarea name="content" cols="30" rows="3" placeholder="Type Here"></textarea>
+            <input type="submit" value="Post">
+    
+        </form>
+        <%} %> 
+    
     <div id="post-list-container">
         <ul>
 
