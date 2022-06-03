@@ -1,8 +1,14 @@
-module.exports.home=function(req,res){
-    console.log(res.cookie);
-    // Altering the cookie which is set in browser
-    res.cookie('user_id',25);
-    return res.render('home',{
-        title:"Home"
-    });
+const Post = require('../models/post');
+module.exports.home = function (req, res) {
+
+
+
+    Post.find({}).populate('user').exec(function (err, posts) {
+
+        return res.render('home', {
+            title: "Codeial | Home",
+            posts: posts
+        });
+    })
+
 }
