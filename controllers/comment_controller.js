@@ -41,3 +41,32 @@ module.exports.create = function (req, res) {
 
     })
 }
+
+
+module.exports.destroy=function(req,res)
+{
+
+    Comment.findById(req.params.id,function(err,comment)
+    {
+        if(comment.user==req.user.id)
+        {
+            // as post also has diff comment id so we need to delete that from the post
+            let postId=comment.user;
+            comment.remove();
+            // now comment is removed
+            // we have to find the post then delete the id of the comment from there
+            Post.findByIdAndUpdate(postId,{$pull:{comments:req.params.id}},function(err,post){
+                if(err)
+                {
+                    console.log("Error in deleting comment")
+                }
+                return res.redirect('back');
+            });
+
+        }
+        else{
+            console.log("Cannot find comment")
+            return res.redirect('back');
+        }
+    })
+}

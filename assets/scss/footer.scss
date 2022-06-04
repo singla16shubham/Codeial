@@ -2,7 +2,9 @@ footer{
     display: flex;
     justify-content: flex-start;
     background-color: grey;
-    // position: fixed;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 
     #rights{
         color: white;

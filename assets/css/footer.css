@@ -1,7 +1,10 @@
 footer {
   display: flex;
   justify-content: flex-start;
-  background-color: grey; }
+  background-color: grey;
+  position: fixed;
+  bottom: 0;
+  width: 100%; }
   footer #rights {
     color: white;
     margin-left: 10px; }
