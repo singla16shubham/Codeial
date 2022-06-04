@@ -8,6 +8,7 @@ module.exports.create = function (req, res) {
     
     var id = mongoose.Types.ObjectId(req.body.post.trim());
     // var id=aid.trim();
+    // find by id takes an object id not a string so if it is a string then convert it.
     Post.findById(id, function (err, post) {
         console.log(post)
         if (post) {
@@ -16,7 +17,6 @@ module.exports.create = function (req, res) {
                 content: req.body.content,
                 post: id,
                 // Should send object id not a string
-                // post:post._id,
                 user: req.user._id
             },
                 function (err, comment) {
