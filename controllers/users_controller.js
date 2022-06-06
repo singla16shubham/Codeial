@@ -1,12 +1,34 @@
 const User=require('../models/user')
 
 module.exports.profile=function(req,res)
-{
-    return res.render('user_profile',{
-        title: "users",
-        // name:"Shubham"
-    });
+{ 
+    User.findById(req.params.id,function(err,user)
+    {
+        return res.render('user_profile',{
+            title: "users",
+            profile_user:user
+            // name:"Shubham"
+        });
+    })
+  
 }
+
+
+module.exports.update=function(req,res)
+{ if(req.user.id==req.params.id)
+    {
+        User.findByIdAndUpdate(req.params.id,req.body,function(err,user){
+            return res.redirect('back');
+        });
+    }
+    else{
+        // status have different codes 200 for success and other status can be searched also
+        return res.status(401).send('Unauthorised');
+    }
+  
+}
+
+
 // We are adding action
 module.exports.signUp=function(req,res){
     if(req.isAuthenticated())
@@ -66,3 +88,4 @@ module.exports.destroy_session=function(req,res)
     // req.logout();
     // return res.redirect('/')
 }
+
