@@ -4,6 +4,7 @@ module.exports.home = async function (req, res) {
 
     // Now we are using the async awiat so that our code will look cleaner and better
     //  if any error comes catch will be used
+    // As async awiat will help us to reduce call backs so it will be better
     try {
         let posts = await Post.find({})
             .populate('user')
