@@ -30,6 +30,7 @@ module.exports.update =  function (req, res) {
 
 
 // We are adding action
+// Below two controllers are for header signin and signup 
 module.exports.signUp = function (req, res) {
     if (req.isAuthenticated()) {
         return res.redirect('/users/profile');
@@ -76,19 +77,35 @@ module.exports.create = async function (req, res) {
 
 
 // sign in and create a session for the user
+// how are we creating a session??
 module.exports.create_session = function (req, res) {
-
+  req.flash('success',"Logged in successfully");
     return res.redirect('/')
 }
-module.exports.destroy_session = async function (req, res) {
-    try {
-        await req.logout(
-            res.redirect('/'))
 
-    }
-    catch (err) {
-        console.log("error", err);
+// req.logout now has become async previously it was sync
+module.exports.destroy_session =  function (req, res) {
+ 
+        // req.logout(function(err){ res.redirect('/')});
+        req.logout(function(err) {
+            if (err) { return next(err); }
+            req.flash('success',"Logged Out successfully");
+            res.redirect('/');
+          });
+        //   next();
+          
+        
+    //    req.logout( ),res.redirect('/'));
+    // req.flash('success',"Logged out successfully");
+    // req.session.destroy(function(err){
+       
+    //    return res.redirect('/')});
 
-    }
+    
+    
+  
+  
+  
+     
 }
 

@@ -14,8 +14,8 @@ const app=express();
  const MongoStore=require('connect-mongo');
 
  const sassMiddleware=require('node-sass-middleware');
-
-
+ const flash=require('connect-flash');
+const customMware=require('./config/middleware');
 
 const { urlencoded } = require('express');
 
@@ -54,12 +54,7 @@ app.use(session({
     cookie:{
         maxAge:(1000*60*100)
     },
-    // store:new MongoStore({
-        
-    //         mongooseConnection:db,
-    //         autoRemove:'disabled'
-        
-    // },
+//  this
     store:MongoStore.create({mongoUrl:'mongodb://localhost/codeial_development',autoRemove:'disabled'},
         
     function(err)
@@ -73,6 +68,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(passport.setAuthenticatedUser);
+app.use(flash());
+app.use(customMware.setFlash);
 
 
 app.use('/',require('./routes'))
