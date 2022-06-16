@@ -92,14 +92,10 @@ module.exports.destroy_session =  function (req, res) {
             req.flash('success',"Logged Out successfully");
             res.redirect('/');
           });
-        //   next();
+    
           
         
-    //    req.logout( ),res.redirect('/'));
-    // req.flash('success',"Logged out successfully");
-    // req.session.destroy(function(err){
-       
-    //    return res.redirect('/')});
+
 
     
     

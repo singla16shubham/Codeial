@@ -28,6 +28,26 @@ module.exports.create = async function (req, res) {
             // console.log(post);
             post.comments.push(comment)
             post.save();
+            if(req.xhr){
+                let newComment = await Comment
+                .populate(comment, {
+                    path: 'user',
+                    select:'name'
+                });
+               
+
+                return res.status(200).json({
+                    data: {
+                        comment: comment
+                    },
+                    message: "Comment Added"
+                });
+            }
+
+
+
+
+            req.flash("success","Comment added Successfully");
             // I had not made the comments as an  array thats why it was not working
             return res.redirect('/')
 
@@ -38,6 +58,7 @@ module.exports.create = async function (req, res) {
 
     }
     catch (err) {
+        req.flash("Error","Error in deleting");
         console.log("Error", err);
     }
 
@@ -55,13 +76,24 @@ module.exports.destroy = async function (req, res) {
             comment.remove();
             // now comment is removed
             // we have to find the post then delete the id of the comment from there
-           let post= await Post.findByIdAndUpdate(postId, { $pull: { comments: req.params.id } })
+           let post= await Post.findByIdAndUpdate(postId, { $pull: { comments: req.params.id } });
+
+           if(req.xhr){
+            return res.status(200).json({
+                data: {
+                    comment_id: req.params.id
+                },
+                message: "comment deleted"
+            });
+            }   
+           req.flash("success","Comment deleted Successfully");
 
             return res.redirect('back');
 
 
         }
         else {
+            req.flash("error","Comment not found");
             console.log("Cannot find comment")
             return res.redirect('back');
         }

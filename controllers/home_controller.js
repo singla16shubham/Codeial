@@ -7,6 +7,7 @@ module.exports.home = async function (req, res) {
     // As async awiat will help us to reduce call backs so it will be better
     try {
         let posts = await Post.find({})
+            .sort("-createdAt")
             .populate('user')
             .populate({
                 path: 'comments',

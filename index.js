@@ -34,7 +34,7 @@ app.use(sassMiddleware({
 
 //  extract styles and sublayouts in layout
 app.set('layout extractStyles', true);
-app.set('layout Scripts', true);
+app.set('layout extractScripts', true);
 
 //  use express router
 
