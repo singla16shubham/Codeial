@@ -31,6 +31,8 @@ app.use(sassMiddleware({
  app.use(cookieParser());
 
  app.use(express.static('./assets'));
+//  it will make the upload path available to browser
+ app.use('/uploads',express.static(__dirname+ '/uploads'))
 
 //  extract styles and sublayouts in layout
 app.set('layout extractStyles', true);
