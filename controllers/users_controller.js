@@ -68,7 +68,7 @@ module.exports.update = async function (req, res) {
 // Below two controllers are for header signin and signup 
 module.exports.signUp = function (req, res) {
     if (req.isAuthenticated()) {
-        return res.redirect('/users/profile');
+        return res.redirect('/');
     }
     return res.render('user_sign_up', {
         title: 'Codeial | SignUp'
@@ -77,8 +77,10 @@ module.exports.signUp = function (req, res) {
 
 module.exports.signIn = function (req, res) {
     // Doing this will ensure that user does not go to sign-in page unless sign out
+    
     if (req.isAuthenticated()) {
-        return res.redirect('/users/profile');
+        console.log(req.user._id);
+        return res.redirect("/");
     }
 
     return res.render('user_sign_in', {
@@ -115,7 +117,7 @@ module.exports.create = async function (req, res) {
 // how are we creating a session??
 module.exports.create_session = function (req, res) {
   req.flash('success',"Logged in successfully");
-    return res.redirect('/')
+    return res.redirect('back')
 }
 
 // req.logout now has become async previously it was sync

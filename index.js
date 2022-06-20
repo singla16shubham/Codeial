@@ -11,6 +11,7 @@ const app=express();
  const passport=require('passport');
  const passportLocal=require('./config/passport-local-strategy');
  const passportJWT=require('./config/passport-jwt-strategy');
+ const googlePassport=require('./config/passport-google-oauth2-strategy');
  
  const MongoStore=require('connect-mongo');
 
