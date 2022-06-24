@@ -1,0 +1,10 @@
+<h1>
+    Hello! Here your password reset link is coming
+</h1>
+<p>
+    Your name is <%= token.user.name %> 
+    Your token is <%= token.accessToken %> 
+    <!-- Now here user will click on a link that will take him to reset_pasword/accesstoken -->
+    <a href="http://localhost:8001/users/set_password/<%= token.accessToken %>">Reset Your Password</a>
+    
+</p>

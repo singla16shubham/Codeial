@@ -1,0 +1,49 @@
+<h1>
+    Hello 
+</h1>
+<p>It Seems You forget Your password!! Don;t Worry Just fill the form to reset the password</p>
+
+<br>
+<br>
+<!-- Ask for the email .. find email in data base Generate the reset_token -->
+<!-- If req token is true then show the form otherwise show message token expired -->
+<!-- Send the email to the user for the update password through that mail come back to this page to show form -->
+
+<% if(!access)
+{%>
+    <p>Please enter Your email registered with site</p>
+<form action="/users/reset-mail" method="post">
+    <input type="email" placeholder="Email" name="email">
+    <input type="submit" name="Submit">
+</form>    
+<%}
+else{
+
+    %>
+    
+<% if(token.isValid==true)
+// if user matches then show form for update
+{%>
+ 
+    
+    <form action="/users/update_password/<%= token.user %>" method="post">
+    <input type="password" name="password" placeholder="Password" required>
+    <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+    <input type="submit" value="submit">
+
+</form>
+    
+<%}
+%>
+    
+    
+    <%
+}
+
+
+
+%> 
+
+
+
+

@@ -1,6 +1,13 @@
 const User = require('../models/user');
+const Token=require('../models/reset_token');
 const fs=require('fs');
 const path=require('path');
+const crypto = require('crypto');
+const queue = require('../config/kue');
+const passResetMailer=require('../mailers/reset_pass_mailer');
+const passResetWorker=require('../workers/pass_reset_worker');
+const mongoose=require('mongoose');
+const querystring = require('querystring');
 
 module.exports.profile = async function (req, res) {
     try {
@@ -129,16 +136,144 @@ module.exports.destroy_session =  function (req, res) {
             req.flash('success',"Logged Out successfully");
             res.redirect('/');
           });
-    
-          
         
-
-
-    
-    
-  
-  
-  
-     
 }
 
+
+module.exports.reset_pass=function(req,res){
+    
+    return res.render('user_reset_pass',{
+        title: "User Password Reset",
+        access:false
+    });
+}
+
+module.exports.reset_mail= async function(req,res){
+  
+
+try{
+    let user= await User.findOne({ email: req.body.email })
+    Token.create({
+        user:user,
+        accessToken: crypto.randomBytes(30).toString('hex'),
+        isValid:true
+
+    },function(err,token){
+        if(err)
+        {
+            console.log("err",err);
+        }
+        token.save();
+        console.log("inside mail",token);
+        let job= queue.create('reset',token).save(function(err){
+            if(err){
+                console.log("error in creating queue",err);
+                return
+
+            }
+            console.log(job.id);
+        })
+       
+
+    })
+    req.flash('success', 'Password reset link sent. Please check your mail');
+    return res.redirect('/')
+   
+}
+catch(err){
+    req.flash('error', 'User not found. Try again!');
+    return res.redirect('back');
+}
+
+    
+ };
+ 
+
+
+    
+
+
+module.exports.set_pass= async function(req,res){
+   
+  
+    try{
+        let token= await Token.findOne({accessToken:req.params.accessToken})
+        if(token.isValid==true)
+        {
+            // Show the form
+            console.log("In token validation");
+            // return res.redirect('/');
+          return  res.render('user_reset_pass',{
+                title:"User password reset",
+                access:true,
+                token:token
+            })
+        }
+        else
+        {
+            req.flash('error', 'Link expired');
+            return res.redirect('/users/reset_password');
+        }
+    }
+    catch(err)
+    {
+        console.log("Error in finding token",err);
+        return res.redirect('/');
+    }
+    
+   
+    
+}
+
+module.exports.update_pass= async function(req,res){
+    console.log("In the update pass");
+    if (req.body.password != req.body.confirm_password) {
+        console.log("Wrong pass")
+        req.flash('error', "Password Do not match");
+        return res.redirect('back');
+    }
+    else{
+        // Need to update the user password... How to get the user
+        // console.log("Right password",req.query.accesstoken);
+        // console.log("Right password",req.query.accesstoken._id);
+        // console.log("Right password",req.query.user);
+        // console.log(querystring.parse(req.query.accesstoken));
+        // console.log(req.params);
+        // console.log(req.params.token);
+        // let data=JSON.stringify(req.params.token);
+        // console.log(data);
+        // let newdata=JSON.parse(data);
+        // console.log("newdata",newdata["user"]);
+        try{
+            console.log(req.params.user);
+            var id = mongoose.Types.ObjectId(req.params.user.trim());
+          let user= await  User.findById(id);
+          let token=await Token.findOne({user: user._id});
+          console.log(user);
+          console.log(token);
+          
+             
+               user.password= req.body.password;
+               token.isValid=false;
+
+            
+               user.save();
+               token.save();
+               console.log(token);
+            
+    
+            req.flash('success', "Password updated. Login now!");
+            return res.redirect('/users/sign-in');
+        }
+        catch(err)
+        {
+            if(err)
+            {
+                console.log("No user",err);
+            }
+
+        }
+ 
+
+    }
+}

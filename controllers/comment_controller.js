@@ -1,6 +1,9 @@
 const Comment = require('../models/comment')
 const Post = require('../models/post');
 var mongoose = require('mongoose');
+const commentMailer=require('../mailers/comments_mailer');
+const commentEmailWorker=require('../workers/comment_email_worker');
+const queue=require('../config/kue');
 
 module.exports.create = async function (req, res) {
     // as req.body.post will give us the id .. as we have named it post in comment form
@@ -28,12 +31,24 @@ module.exports.create = async function (req, res) {
             // console.log(post);
             post.comments.push(comment)
             post.save();
+            comment = await Comment
+            .populate(comment, {
+                path: 'user',
+                select:'name email'
+            });
+
+            // commentMailer.newComment(comment);
+           let job= queue.create('emails',comment).save(function(err){
+                if(err){
+                    console.log("error in creating queue",err);
+                    return
+
+                }
+                console.log(job.id);
+            })
+
             if(req.xhr){
-                let newComment = await Comment
-                .populate(comment, {
-                    path: 'user',
-                    select:'name'
-                });
+             
                
 
                 return res.status(200).json({
