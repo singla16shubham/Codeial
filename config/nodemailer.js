@@ -9,8 +9,9 @@ let transporter = nodemailer.createTransport({
     // Here app password is Generated For sending the emails thorugh this email
     // Remember to remove it
     auth: {
-      user: 'singla16shubham@gmail.com', // generated ethereal user
-      pass: 'kawdjdwphxztcmgl' // generated ethereal password
+      // have to set the credentials of the person by which mail needs to be sent
+      user: 'abc@gmail.com', // generated ethereal user
+      pass: '123' // generated ethereal password
     },
   });
 
