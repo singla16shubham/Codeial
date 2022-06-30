@@ -1,6 +1,17 @@
 <link rel="stylesheet" href="/css/home.css">
 
 <div id="home-container">
+    <section id="user-nav">
+        <h4>User</h4>
+        <% if(locals.user) { %>
+            <% if(user.avatar) { %>
+                <img src="<%= user.avatar %>" alt="<%= user.name %>" width="100">
+            <% } %>
+            <p>
+                <a href="/users/profile/<%= user.id %>"><%= user.name %></a>
+            </p>
+        <% } %>
+    </section>
 
     <section id="feed-posts">
         <h4>Posts</h4>
@@ -40,3 +51,10 @@
 </div>
 <script src="/js/home_post.js"></script>
 <script src="/js/home_comments.js"></script>
+<script src="/js/toggle_likes.js"></script>
+<script>
+    $('.toggle-like-button').each(function(){
+        let self = this;
+        let toggleLike = new ToggleLike(self);
+    });
+</script>

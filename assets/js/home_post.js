@@ -19,6 +19,7 @@
                     $('#post-list-container>ul').prepend(newPost);
                     deletePost($(' .delete-post-button', newPost));
                     // console.log(data);
+                    new ToggleLike($(' .toggle-like-button', newPost));
                     new Noty({
                         theme: 'relax',
                         text: "Post published",
@@ -53,10 +54,17 @@
                         <small>
                         ${ post.user.name}
                         </small>
+                        <small>
+                        <br>
+                        <a class="toggle-like-button" data-likes="0" href="/likes/toggle/?id=${post._id}&type=Post">
+                       0 Likes
+                        </small>
+                      
+                </a>
         </p>
     
         <div class="post-comments">
-           
+       
     
                 <form action="/comment/create" id="new-comment-form" method="POST">
                     <input type="text" name="content" placeholder="type here to add comment" required>
@@ -64,14 +72,15 @@
                     <input type="submit" value="Add comment">
     
                 </form>
+                <div class="post-comments-list">
+                <ul id="post-comments-${post._id }">
+                   
+                </ul>
+        
+                  </div>
               
     
-                    <div class="post-comments-list">
-                        <ul id="post-comments-${post._id }">
-                           
-                        </ul>
-    
-                    </div>
+                 
     
         </div>
     

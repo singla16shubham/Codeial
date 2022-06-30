@@ -14,7 +14,7 @@
                     $(`#post-comments-${data.data.comment.post}`).prepend(newComment);
                     deleteComment($(' .delete-comment-button', newComment));
                     console.log(data);
-
+                    new ToggleLike($(' .toggle-like-button', newComment));
                    
 
                     new Noty({
@@ -46,6 +46,13 @@
            <br>
            <small>
                ${comment.user.name}
+           </small>
+           <br>
+           <small>
+           <a class="toggle-like-button" data-likes="0" href="/likes/toggle/?id=${comment._id}&type=Comment">
+           0 Likes
+   </a>
+           
            </small>
        </p>
        

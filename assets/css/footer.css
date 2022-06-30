@@ -5,9 +5,10 @@ footer {
   position: fixed;
   bottom: 0;
   width: 100%; }
-  footer #rights {
+  footer #left {
     color: white;
-    margin-left: 10px; }
+    margin-left: 10px;
+    margin-top: 10px; }
   footer #navigation-items {
     margin-left: 10px; }
     footer #navigation-items ul {

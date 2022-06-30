@@ -6,6 +6,7 @@ router.get('/',homeController.home);
 router.use('/users',require('./users'))
 router.use('/posts',require('./posts'))
 router.use('/comment',require('./comment'))
+router.use('/likes',require('./likes'))
 // router.use('/manager',require('./manager'))
 
 router.use('/api',require('./api'));

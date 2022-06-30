@@ -1,5 +1,6 @@
 const Comment = require('../models/comment')
 const Post = require('../models/post');
+const Like = require('../models/likes');
 var mongoose = require('mongoose');
 const commentMailer=require('../mailers/comments_mailer');
 const commentEmailWorker=require('../workers/comment_email_worker');
@@ -88,6 +89,7 @@ module.exports.destroy = async function (req, res) {
         if (comment.user == req.user.id) {
             // as post also has diff comment id so we need to delete that from the post
             let postId = comment.user;
+            await Like.deleteMany({likeable:comment._id,onModel:'Comment'});
             comment.remove();
             // now comment is removed
             // we have to find the post then delete the id of the comment from there
