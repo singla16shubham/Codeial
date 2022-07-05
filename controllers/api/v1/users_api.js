@@ -1,6 +1,7 @@
 
 const User=require('../../../models/user');
 const jwt=require('jsonwebtoken');
+const env=require('../../../config/environment')
 
 module.exports.create_session = async function (req, res) {
 
@@ -16,13 +17,13 @@ try{
     return res.json(200,{
         message:"Sign in Successful, Here is your token keep it safe",
       data:{
-        token: jwt.sign(user.toJSON(),'codeial',{expiresIn:'10000'})
+        token: jwt.sign(user.toJSON(),env.jwt_secret,{expiresIn:'10000'})
       }
     })
 }
 catch(err)
 {
-    console.log('Ee',err);
+    console.log('Error',err);
         return res.json(500,{
             messae: "internal Server error"
         })

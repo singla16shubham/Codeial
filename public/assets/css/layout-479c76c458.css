@@ -1,0 +1,7 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+  body #layout-main {
+    height: 100%;
+    margin-bottom: 60px;
+    overflow: auto; }

@@ -1,0 +1,20 @@
+footer {
+  display: flex;
+  justify-content: flex-start;
+  background-color: grey;
+  position: fixed;
+  bottom: 0;
+  width: 100%; }
+  footer #left {
+    color: white;
+    margin-left: 10px;
+    margin-top: 10px; }
+  footer #navigation-items {
+    margin-left: 10px; }
+    footer #navigation-items ul {
+      list-style: none; }
+      footer #navigation-items ul li a {
+        color: white;
+        text-decoration: none; }
+        footer #navigation-items ul li a:hover {
+          color: palegoldenrod; }
