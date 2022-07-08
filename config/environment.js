@@ -25,7 +25,7 @@ const development={
         auth: {
           // have to set the credentials of the person by which mail nee
           user: 'singla16shubham@gmail.com', // generated ethereal user
-          pass: 'kawdjdwphxztcmgl' // generated ethereal password
+          pass: '' // generated ethereal password
         },
       },
       google_client_id:'306064148042-rpo6g54ml5qg63dotsr2c68pf9t64dqf.apps.googleusercontent.com',
